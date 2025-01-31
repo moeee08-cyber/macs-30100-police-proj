@@ -1,4 +1,5 @@
 ##########
-#Preprocessing & City/Neighborhood Encoding
-#Anita Sun
+# Preprocessing & City/Neighborhood Encoding
+# Anita Sun - nitomanto
+# Felix Chen - flora-concise
 ##########
