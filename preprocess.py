@@ -2,6 +2,7 @@
 # Preprocessing & City/Neighborhood Encoding
 # Anita Sun - nitomanto
 # Felix Chen - flora-concise
+# 
 ##########
 
 import numpy as np
@@ -11,8 +12,7 @@ def clean_police_dataset(path):
     '''
     Parses .csv file of police dataset and outputs a cleaned pandas dataframe.
     '''
-    PATH = path
-    with open(PATH, 'r', errors='replace') as pol_datafile:
+    with open(path, 'r', errors='replace') as pol_datafile:
         pol_df = pd.read_csv(pol_datafile)
     
     # Drop columns with >= 30% missing values
@@ -21,7 +21,12 @@ def clean_police_dataset(path):
     pol_df.shape, pol_df.columns
 
 
+    #######################
     ##### Categorical #####
+    #######################
+
+    # 'city' is made all lower-case here
+    pol_df['city'] = pol_df['city'].str.lower()
 
     # 'tract' contains extraneous '.0' from erroneous conversion -> remove '.0'
     pol_df['tract'] = pol_df['tract'].astype('string').str.replace('.0', '')
@@ -39,7 +44,10 @@ def clean_police_dataset(path):
     pol_df[cat_cols] = pol_df[cat_cols].astype('category')
     
 
+    #####################
     ##### Numerical #####
+    #####################
+
     float64_cols = ['latitude', 'longitude']
     float32_cols = ['age']
     pol_df[float64_cols] = pol_df[float64_cols].astype('float64')
@@ -57,7 +65,9 @@ def clean_police_dataset(path):
     pol_df.dropna(subset=['lat_long'], inplace=True)
 
 
+    #########################
     ##### Date and Time #####
+    #########################
 
     # Convert to DateTime type
     series_date = pol_df['date'].astype('string').str.split('/')
@@ -66,12 +76,16 @@ def clean_police_dataset(path):
     pol_df = pd.DataFrame.join(pol_df, df_date)
 
 
+    ##########################
     ##### String or Text #####
+    ##########################
+
     str_cols = ['name', 'street_address']
     pol_df[str_cols] = pol_df[str_cols].astype('string')
 
 
-
-
+    ########################
     ##### Final Return #####
+    ########################
+
     return pol_df
