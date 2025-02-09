@@ -1,2 +1,5 @@
-# .xlsx: To avoid accidentally uploading the temporary file
+# To avoid accidentally uploading the temporary file (Windows)
 ~$*
+
+# ADS file decluttering
+*:Zone.Identifier
